@@ -807,6 +807,8 @@ private:
 
     int _selModeModifiers;
     bool _selModeByModifiers; // Selection started by Shift+Arrow
+
+    bool _lastCtrlLeft = false;
 };
 
 }

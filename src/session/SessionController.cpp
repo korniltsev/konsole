@@ -476,15 +476,14 @@ void SessionController::updateCopyAction(const bool selectionEmpty)
     QAction *copyContextMenu = actionCollection()->action(QStringLiteral("edit_copy_contextmenu"));
     // copy action is meaningful only when some text is selected.
     // Or when semantic integration is used.
-    bool hasRepl = view() && view()->screenWindow() && view()->screenWindow()->screen() && view()->screenWindow()->screen()->hasRepl();
-    copyAction->setEnabled(!selectionEmpty || hasRepl);
-    copyContextMenu->setVisible(!selectionEmpty || hasRepl);
+    copyAction->setEnabled(true);
+    copyContextMenu->setVisible(true);
     QAction *Action = actionCollection()->action(QStringLiteral("edit_copy_contextmenu_in"));
-    Action->setVisible(!selectionEmpty && hasRepl);
+    Action->setVisible(true);
     Action = actionCollection()->action(QStringLiteral("edit_copy_contextmenu_out"));
-    Action->setVisible(!selectionEmpty && hasRepl);
+    Action->setVisible(true);
     Action = actionCollection()->action(QStringLiteral("edit_copy_contextmenu_in_out"));
-    Action->setVisible(!selectionEmpty && hasRepl);
+    Action->setVisible(true);
 }
 
 void SessionController::updateWebSearchMenu()
@@ -664,7 +663,7 @@ void SessionController::setupCommonActions()
     action = KStandardAction::copy(this, &SessionController::copy, collection);
     collection->setDefaultShortcut(action, Konsole::ACCEL | Qt::Key_C);
     // disabled at first, since nothing has been selected now
-    action->setEnabled(false);
+    action->setEnabled(true);
 
     // We need a different QAction on the context menu because one will be disabled when there's no selection,
     // other will be hidden.

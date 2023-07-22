@@ -2847,9 +2847,18 @@ bool TerminalDisplay::event(QEvent *event)
 {
     bool eventHandled = false;
     switch (event->type()) {
-    case QEvent::ShortcutOverride:
-        eventHandled = handleShortcutOverrideEvent(static_cast<QKeyEvent *>(event));
-        break;
+    case QEvent::ShortcutOverride: {
+        auto *ke = static_cast<QKeyEvent *>(event);
+        if (ke->key() == 16777249) {
+            _lastCtrlLeft = ke->nativeScanCode() == 105;
+        }
+        if (ke->key() == 67 && _lastCtrlLeft) {
+            eventHandled = true;
+            event->accept();
+        } else {
+            eventHandled = handleShortcutOverrideEvent(ke);
+        }
+    } break;
     case QEvent::PaletteChange:
     case QEvent::ApplicationPaletteChange:
         if (_terminalColor) {
